@@ -1,8 +1,10 @@
 const color = {
   black: '#000',
   white: '#fff',
+  whiteGray: '#f4f4f4',
   gray: '#999',
-  lightgray: '#E0E0E0',
+  lightGray: '#E0E0E0',
+  unSelectedGray: '#E5E5E5',
 };
 
 const theme = {
