@@ -1,5 +1,11 @@
+import Tab from '../components/Tab';
+
 function ReviewListPage() {
-  return <div>ReviewListPage</div>;
+  return (
+    <div>
+      <Tab />
+    </div>
+  );
 }
 
 export default ReviewListPage;
