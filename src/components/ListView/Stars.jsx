@@ -1,14 +1,20 @@
 import styled, { css } from 'styled-components';
 import { FiStar } from 'react-icons/fi';
+import PropTypes from 'prop-types';
 
-function Stars() {
+function Stars({ stars }) {
   return (
     <Rating>
-      <Star black />
-      <Star black />
-      <Star black />
-      <Star black />
-      <Star />
+      {[...Array(stars)].map(() => (
+        <div>
+          <Star black />
+        </div>
+      ))}
+      {[...Array(5 - stars)].map(() => (
+        <div>
+          <Star />
+        </div>
+      ))}
     </Rating>
   );
 }
@@ -17,6 +23,7 @@ export default Stars;
 
 const Rating = styled.div`
   padding: 1rem 1.6rem;
+  display: flex;
 `;
 
 const Star = styled(FiStar)`
@@ -28,3 +35,7 @@ const Star = styled(FiStar)`
       fill: ${props.theme.color.black};
     `}
 `;
+
+Stars.propTypes = {
+  stars: PropTypes.number.isRequired,
+};

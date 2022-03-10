@@ -17,7 +17,7 @@ function ReviewDetailsPage() {
           <InfoTop username={item.username} createdAt={item.createdAt} />
           <Image src={item.src} />
           <SocialArea likes={item.likes} />
-          <Stars />
+          <Stars stars={item.stars} />
           <Desc description={item.description} />
           <Content review={item.review} />
         </div>
