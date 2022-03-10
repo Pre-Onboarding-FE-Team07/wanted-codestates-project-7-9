@@ -13,14 +13,14 @@ function ReviewDetailsPage() {
     <Detail>
       <ModalHeader title="리뷰 상세보기" />
       {Data.map((item) => (
-        <>
+        <div key={item.id}>
           <InfoTop username={item.username} createdAt={item.createdAt} />
           <Image src={item.src} />
           <SocialArea likes={item.likes} />
           <Stars />
           <Desc description={item.description} />
           <Content review={item.review} />
-        </>
+        </div>
       ))}
     </Detail>
   );
