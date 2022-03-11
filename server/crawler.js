@@ -5,9 +5,11 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 const CONTENTS_URL = 'https://balaan.co.kr/m2/main/contents.php';
+const LEAST_ITEMS = process.argv[2] || 500;
+console.log(`🔥 Scraping at least ${LEAST_ITEMS} items...`);
 
 (async () => {
-  const contents = await loadContents(CONTENTS_URL, { leastItems: 500 });
+  const contents = await loadContents(CONTENTS_URL, { leastItems: LEAST_ITEMS });
   const $ = cheerio.load(contents);
 
   const result = $('.contents-item')
@@ -96,9 +98,9 @@ async function loadContents(
 
   const getItemsLength = async () => (await html.$$('.contents-item')).length;
 
-  if (getItemsLength < leastItems) {
+  const length = { previous: 0, current: await getItemsLength() };
+  if (length.current < leastItems) {
     group('🌱 Starting infinite scrolling...');
-    const length = { previous: 0, current: 0 };
     let count = 1;
     let retry = 0;
     while (length.current < leastItems) {
