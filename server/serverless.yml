@@ -1,10 +1,10 @@
-service: server
+service: balaan-crawler
 
 provider:
   name: google
   stage: dev
   runtime: nodejs10
-  region: us-central1
+  region: asia-northeast3
   project: team-projects-343711
   # The GCF credentials can be a little tricky to set up. Luckily we've documented this for you here:
   # https://serverless.com/framework/docs/providers/google/guide/credentials/
@@ -26,7 +26,7 @@ package:
     - '!.git/**'
 
 functions:
-  first:
+  contents:
     handler: http
     events:
       - http: path
