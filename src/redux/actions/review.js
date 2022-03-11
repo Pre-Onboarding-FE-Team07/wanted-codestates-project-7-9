@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   SET_REVIEWS,
   REFRESH_REVIEWS,
@@ -7,10 +8,18 @@ import {
   SET_SORT_OPTION,
 } from './types';
 
-export const setReviews = (datas) => ({
-  type: SET_REVIEWS,
-  payload: datas,
-});
+const SERVER_LESS_API = 'https://asia-northeast3-team-projects-343711.cloudfunctions.net/balaan-crawler-dev-contents';
+
+export const setReviews = (pageNo, perPage) => {
+  const request = axios
+    .get(SERVER_LESS_API, { params: { pageNo, perPage } })
+    .then((res) => res.data)
+    .catch((error) => error);
+  return {
+    type: SET_REVIEWS,
+    payload: request,
+  };
+};
 
 export const refreshReviews = (datas) => ({
   type: REFRESH_REVIEWS,

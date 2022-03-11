@@ -1,8 +1,5 @@
 import {
-  memo,
-  useEffect,
-  useRef,
-  useCallback,
+  memo, useEffect, useRef, useCallback,
 } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -10,19 +7,18 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { setReviews } from '../redux/actions/review';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
-import useData from '../hooks/useData';
+// import useData from '../hooks/useData';
 
 let page = 0;
 function GridView({ datas }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const listRef = useRef();
-  const fetchData = useData();
+  // const fetchData = useData();
   const getMoreItems = useCallback(async () => {
     setLoading(true);
     page += 1;
-    const data = await fetchData(page, 20);
-    dispatch(setReviews(data));
+    await dispatch(setReviews(page, 20));
     setLoading(false);
   }, []);
   const { setContainerRef, setLoading } = useInfiniteScroll({ getMoreItems });
