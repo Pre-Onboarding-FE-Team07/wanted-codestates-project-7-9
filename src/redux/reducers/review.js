@@ -3,7 +3,7 @@ import {
   ADD_REVIEW,
   LIKE_REVIEW,
   UNLIKE_REVIEW,
-} from "../actions/types";
+} from '../actions/types';
 
 const initialState = {
   reviews: [],

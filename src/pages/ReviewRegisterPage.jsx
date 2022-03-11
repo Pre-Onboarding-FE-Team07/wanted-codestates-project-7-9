@@ -1,12 +1,12 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { FiXCircle } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import { customAlphabet } from "nanoid";
-import moment from "moment";
-import StarRating from "../components/StarRating";
-import { addReview } from "../redux/actions/review";
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { FiXCircle } from 'react-icons/fi';
+import { useDispatch } from 'react-redux';
+import { customAlphabet } from 'nanoid';
+import moment from 'moment';
+import StarRating from '../components/StarRating';
+import { addReview } from '../redux/actions/review';
 
 const Container = styled.form`
   display: flex;
@@ -119,14 +119,14 @@ const RegisterButton = styled.button`
 `;
 
 function ReviewRegisterPage() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const [photoAddList, setPhotoAddList] = useState([]);
   const [starCount, setStarCount] = useState(0);
 
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const nanoid = customAlphabet("0123456789", 6);
+  const nanoid = customAlphabet('0123456789', 6);
 
   const photoInput = useRef();
 
@@ -159,17 +159,17 @@ function ReviewRegisterPage() {
       addReview({
         id: String(nanoid()),
         src: photoAddList,
-        username: "",
+        username: '',
         review: title,
         description: content,
-        likes: "0",
+        likes: '0',
         stars: starCount,
         comment: [],
         hashTags: [],
-        createAt: moment().format("YYYY-MM-DD"),
+        createAt: moment().format('YYYY-MM-DD'),
       }),
     );
-    navigator("/");
+    navigator('/');
   };
 
   return (
@@ -205,7 +205,7 @@ function ReviewRegisterPage() {
           onChange={(e) => handlePhoto(e)}
           multiple
           ref={photoInput}
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
         />
         <ImageAdd>
           <UploadButton onClick={handleUploadClick}>+</UploadButton>

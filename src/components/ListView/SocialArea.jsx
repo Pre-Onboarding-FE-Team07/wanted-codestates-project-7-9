@@ -1,6 +1,6 @@
-import { FiThumbsUp, FiShare2, FiHeart } from "react-icons/fi";
-import styled, { css } from "styled-components";
-import PropTypes from "prop-types";
+import { FiThumbsUp, FiShare2, FiHeart } from 'react-icons/fi';
+import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
 function SocialArea({ likes }) {
   return (

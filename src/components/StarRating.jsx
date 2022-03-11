@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { FiStar } from "react-icons/fi";
-import { useState } from "react";
+import styled from 'styled-components';
+import { FiStar } from 'react-icons/fi';
+import { useState } from 'react';
 
 function StarRating() {
   const starArr = [1, 2, 3, 4, 5];
@@ -15,7 +15,7 @@ function StarRating() {
           onClick={() => setStarNum(idx)}
           onMouseEnter={() => setHover(idx)}
           onMouseLeave={() => setHover(0)}
-          fill={idx <= (hover || starNum) ? "#000" : "#E5E5E5"}
+          fill={idx <= (hover || starNum) ? '#000' : '#E5E5E5'}
         />
       ))}
     </Rating>

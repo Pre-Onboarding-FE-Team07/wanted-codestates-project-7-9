@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { FiStar } from "react-icons/fi";
+import styled, { css } from 'styled-components';
+import { FiStar } from 'react-icons/fi';
 
 function Stars() {
   return (

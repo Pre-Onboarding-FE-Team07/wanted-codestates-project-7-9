@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { FiArrowLeft, FiX } from "react-icons/fi";
-import PropTypes from "prop-types";
+import styled from 'styled-components';
+import { FiArrowLeft, FiX } from 'react-icons/fi';
+import PropTypes from 'prop-types';
 
 function ModalHeader({ title }) {
   return (

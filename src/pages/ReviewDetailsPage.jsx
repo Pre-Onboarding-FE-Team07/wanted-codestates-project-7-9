@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import ModalHeader from "../components/ModalHeader";
-import InfoTop from "../components/ListView/InfoTop";
-import Image from "../components/ListView/Image";
-import SocialArea from "../components/ListView/SocialArea";
-import Stars from "../components/ListView/Stars";
-import Desc from "../components/ListView/Desc";
-import Content from "../components/ListView/Content";
-import Data from "../data/data.json";
+import styled from 'styled-components';
+import ModalHeader from '../components/ModalHeader';
+import InfoTop from '../components/ListView/InfoTop';
+import Image from '../components/ListView/Image';
+import SocialArea from '../components/ListView/SocialArea';
+import Stars from '../components/ListView/Stars';
+import Desc from '../components/ListView/Desc';
+import Content from '../components/ListView/Content';
+import Data from '../data/data.json';
 
 function ReviewDetailsPage() {
   return (

@@ -1,6 +1,6 @@
 import {
   REVIEWS, ADD_REVIEW, LIKE_REVIEW, UNLIKE_REVIEW,
-} from "./types";
+} from './types';
 
 export const reviews = (datas) => ({
   type: REVIEWS,
