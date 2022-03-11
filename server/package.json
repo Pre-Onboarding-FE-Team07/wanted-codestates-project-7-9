@@ -3,8 +3,15 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-  "author": "serverless.com",
+  "author": "jinyongp <dev.jinyongp@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "invoke:local": "serverless invoke local -f first"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "puppeteer": "^13.5.1"
+  },
   "devDependencies": {
     "serverless-google-cloudfunctions": "*"
   }
