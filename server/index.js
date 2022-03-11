@@ -12,8 +12,8 @@ exports.http = (req, res) => {
     res.set('Access-Control-Max-Age', '3600');
     res.status(204).send('');
   } else {
-    const pageNo = req?.query.pageNo || 1;
-    const perPage = req?.query.perPage || 10;
+    const pageNo = Math.abs(req.query?.pageNo || 1);
+    const perPage = Math.abs(req.query?.perPage || 10);
     const start = perPage * (pageNo - 1);
     const end = perPage + start;
     res
