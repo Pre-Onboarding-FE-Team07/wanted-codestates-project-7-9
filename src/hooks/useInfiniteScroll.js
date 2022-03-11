@@ -21,7 +21,7 @@ const useInfiniteScroll = ({ getMoreItems }) => {
       observer = new IntersectionObserver(onIntersect, { threshold: 0.4 });
       observer.observe(target);
     }
-    return () => observer && observer.disconnect();
+    return () => observer?.disconnect();
   });
 
   return {
