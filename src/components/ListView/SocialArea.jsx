@@ -37,7 +37,7 @@ const Like = styled.div`
 
 const LikeIcon = styled(FiThumbsUp)`
   font-size: 30px;
-  fill: ${(props) => props.theme.color.unSelectedGray};
+  fill: ${(props) => props.theme.color.unselected};
   color: ${(props) => props.theme.color.whiteGray};
   ${(props) => props.black
     && css`
@@ -46,7 +46,7 @@ const LikeIcon = styled(FiThumbsUp)`
 `;
 
 const LikeNumber = styled.p`
-  color: ${(props) => props.theme.color.unSelectedGray};
+  color: ${(props) => props.theme.color.unselected};
   padding: 0.2rem;
 `;
 
@@ -58,7 +58,7 @@ const Share = styled(FiShare2)`
 
 const Heart = styled(FiHeart)`
   font-size: 30px;
-  fill: ${(props) => props.theme.color.unSelectedGray};
+  fill: ${(props) => props.theme.color.unselected};
   color: transparent;
   ${(props) => props.black
     && css`

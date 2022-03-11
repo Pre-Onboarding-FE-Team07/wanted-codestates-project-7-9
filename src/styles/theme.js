@@ -4,7 +4,7 @@ const color = {
   whiteGray: '#f4f4f4',
   gray: '#999',
   lightGray: '#E0E0E0',
-  unSelectedGray: '#E5E5E5',
+  unselected: '#E5E5E5',
 };
 
 const theme = {

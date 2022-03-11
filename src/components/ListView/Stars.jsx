@@ -21,7 +21,7 @@ const Rating = styled.div`
 
 const Star = styled(FiStar)`
   font-size: 30px;
-  fill: ${(props) => props.theme.color.unSelectedGray};
+  fill: ${(props) => props.theme.color.unselected};
   color: transparent;
   ${(props) => props.black
     && css`
