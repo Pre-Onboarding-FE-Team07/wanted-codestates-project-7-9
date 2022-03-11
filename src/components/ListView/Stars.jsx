@@ -3,14 +3,17 @@ import { FiStar } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 
 function Stars({ stars }) {
+  const blackArr = Array.from({ length: stars }, (v, i) => i);
+  const whiteArr = Array.from({ length: 5 - stars }, (v, i) => i);
   return (
     <Rating>
-      {[...Array(stars)].map(() => (
-        <Star black />
+      {blackArr.map((index) => (
+        <Star black="black" key={index} />
       ))}
-      {[...Array(5 - stars)].map(() => (
-        <Star />
-      ))}
+      {whiteArr.map((idx) => {
+        const index = idx + 1;
+        return <Star key={index} />;
+      })}
     </Rating>
   );
 }

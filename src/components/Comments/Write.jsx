@@ -1,15 +1,35 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { addComment } from '../../redux/actions/comment';
 
 function Write({ comments }) {
-  // const ClickButton = () => {
-  //   console.log(comments);
-  // };
+  const [value, setValue] = useState('');
+  const dispatch = useDispatch();
+
+  const clickButton = useCallback(() => {
+    const newCommentArr = [
+      ...comments,
+      {
+        id: 'id1',
+        username: 'project1',
+        target: null,
+        commment: value,
+      },
+    ];
+    dispatch(addComment(newCommentArr));
+    setValue('');
+  }, [comments, dispatch, value]);
 
   return (
     <WriteCustom>
-      <Input placeholder="댓글 달기" />
-      <Button>게시</Button>
+      <Input
+        placeholder="댓글 달기"
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
+      />
+      <Button onClick={clickButton}>게시</Button>
     </WriteCustom>
   );
 }

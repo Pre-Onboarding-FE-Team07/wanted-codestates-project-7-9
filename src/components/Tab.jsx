@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import GridView from './GridView';
+import ListView from './ListView/ListView';
 
 const iconList = [
   { index: 0, icon: <BsGrid3X3 /> },
@@ -50,11 +51,7 @@ function Tab() {
           </TabItem>
         ))}
       </TabRow>
-      {currentTab === 0 ? (
-        <GridView datas={sortedReviews} />
-      ) : (
-        'list'
-      )}
+      {currentTab === 0 ? <GridView datas={sortedReviews} /> : <ListView />}
     </TabWrap>
   );
 }
