@@ -79,18 +79,18 @@ console.log(`🔥 Scraping at least ${LEAST_ITEMS} items...`);
 
 async function loadContents(
   url,
-  { leastItems = 48, timeout = 1000, silent = false, maxRetryCount = 3 },
+  { leastItems = 48, timeout = 1000, silent = false, maxRetryCount = 10 },
 ) {
   const log = (message) => silent || console.log(message);
   const group = (message) => silent || console.group(message);
   const groupEnd = () => silent || console.groupEnd();
 
   log('🚀 Initializing a Browser...');
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: true, defaultViewport: null });
   const page = await browser.newPage();
 
   log(`🔗 Going to ${url}...`);
-  await page.goto(url);
+  await page.goto(url, { waitUntil: 'load', timeout: 0 });
 
   log('🔦 Finding iframe and getting its #document...');
   const iframe = page.frames().find((frame) => frame.name() === 'ifr');
@@ -104,18 +104,20 @@ async function loadContents(
     let count = 1;
     let retry = 0;
     while (length.current < leastItems) {
-      if (retry === maxRetryCount) {
-        log('🚨 Contents could not load anymore!');
-        break;
-      }
       await html.evaluate('window.scrollTo(0, document.body.scrollHeight)');
       await iframe.waitForTimeout(timeout);
 
       length.previous = length.current;
       length.current = await getItemsLength();
-      retry += length.previous === length.current;
-      log(`#${count}: ${length.current} items`);
+      retry = length.previous === length.current ? retry + 1 : 0;
+      log(
+        `#${count}: ${length.current} items${retry ? ` (Retry: ${retry}/${maxRetryCount})` : ''}`,
+      );
       count += 1;
+      if (retry === maxRetryCount) {
+        log('🚨 Contents could not load anymore!');
+        break;
+      }
     }
     groupEnd();
     log('🌳 Finished infinite scrolling!');

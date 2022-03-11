@@ -7,7 +7,7 @@
 
 ## 프로젝트 실행 방법
 
-- 배포 사이트 : 
+- 배포 사이트 : https://ballan-review.netlify.app/
 - 로컬 
 1. `git clone https://github.com/Pre-Onboarding-FE-Team07/wanted-codestates-project-7-9.git`
 2. `npm install`

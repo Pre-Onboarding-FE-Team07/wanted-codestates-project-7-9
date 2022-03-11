@@ -9,7 +9,6 @@ const useData = () => {
       );
       return res?.data;
     } catch (e) {
-      console.log(e);
       return false;
     }
   };

@@ -14,11 +14,25 @@ exports.http = (req, res) => {
   } else {
     const pageNo = Math.abs(req.query?.pageNo || 1);
     const perPage = Math.abs(req.query?.perPage || 10);
+    const sort = req.query?.sort || 'recent';
     const start = perPage * (pageNo - 1);
     const end = perPage + start;
+
+    let sortedData = data;
+    if (sort === 'likes') {
+      sortedData = data.sort((lhs, rhs) => rhs.likes - lhs.likes);
+    } else if (sort === 'comments') {
+      sortedData = data.sort((lhs, rhs) => rhs.comments.length - lhs.comments.length);
+    } else if (sort === 'random') {
+      sortedData = data
+        .map((val) => ({ val, rand: Math.random() }))
+        .sort((lhs, rhs) => lhs.rand - rhs.rand)
+        .map(({ val }) => val);
+    }
+
     res
       .status(200)
       .type('json')
-      .send(JSON.stringify(data.slice(start, end)));
+      .send(JSON.stringify(sortedData.slice(start, end)));
   }
 };

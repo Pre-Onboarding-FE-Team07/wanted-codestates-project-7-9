@@ -20,15 +20,13 @@ function GridView({ datas }) {
     page += 1;
     await dispatch(setReviews(page, 20));
     setLoading(false);
-  }, []);
+  }, [dispatch]);
   const { setContainerRef, setLoading } = useInfiniteScroll({ getMoreItems });
 
   useEffect(() => {
     getMoreItems();
-  }, [getMoreItems]);
-  useEffect(() => {
     setContainerRef(listRef);
-  }, [setContainerRef]);
+  }, [getMoreItems, setContainerRef]);
 
   const handleClickImage = (reviewId) => {
     navigate(`/details/${reviewId}`);

@@ -38,7 +38,7 @@ function Tab() {
     } else {
       return false;
     }
-  }, [sortOption]);
+  }, [sortOption, reviewList]);
 
   return (
     <TabWrap>
