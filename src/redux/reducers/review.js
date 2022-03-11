@@ -16,6 +16,8 @@ export default function review(state = initialState, action = {}) {
         reviews: action.payload,
       };
     case ADD_REVIEW: {
+      console.log(action.payload);
+      console.log(state.reviews);
       return {
         ...state,
         reviews: [...state.reviews, action.payload],
@@ -24,20 +26,16 @@ export default function review(state = initialState, action = {}) {
     case LIKE_REVIEW:
       return {
         ...state,
-        reviews: state.reviews.map((data) => (
-          data.postNumber === action.payload
-            ? { ...data, likes: data.likes + 1 }
-            : data
-        )),
+        reviews: state.reviews.map((data) => (data.postNumber === action.payload
+          ? { ...data, likes: data.likes + 1 }
+          : data)),
       };
     case UNLIKE_REVIEW:
       return {
         ...state,
-        reviews: state.reviews.map((data) => (
-          data.postNumber === action.payload
-            ? { ...data, likes: data.likes - 1 }
-            : data
-        )),
+        reviews: state.reviews.map((data) => (data.postNumber === action.payload
+          ? { ...data, likes: data.likes - 1 }
+          : data)),
       };
     default:
       return state;
