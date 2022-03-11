@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ModalHeader from '../components/ModalHeader';
+import ListNav from '../components/ListView/ListNav';
 import InfoTop from '../components/ListView/InfoTop';
 import Image from '../components/ListView/Image';
 import SocialArea from '../components/ListView/SocialArea';
@@ -12,7 +12,7 @@ import List from '../components/Comments/List';
 function ReviewDetailsPage() {
   return (
     <Detail>
-      <ModalHeader title="리뷰 상세보기" />
+      <ListNav title="리뷰 상세보기" />
       {Data.map((item) => (
         <div key={item.id}>
           <div>

@@ -1,18 +1,24 @@
 import styled from 'styled-components';
 import { FiArrowLeft, FiX } from 'react-icons/fi';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-function ModalHeader({ title }) {
+function ListNav({ title }) {
+  const navigate = useNavigate();
+  const prevClick = () => {
+    navigate('/');
+  };
+
   return (
     <Container>
-      <Arrow />
+      <Arrow onClick={prevClick} />
       <Item>{title}</Item>
-      <Close />
+      <Close onClick={prevClick} />
     </Container>
   );
 }
 
-export default ModalHeader;
+export default ListNav;
 
 const Container = styled.header`
   height: 60px;
@@ -43,6 +49,6 @@ const Close = styled(FiX)`
   padding-right: 1.6rem;
 `;
 
-ModalHeader.propTypes = {
+ListNav.propTypes = {
   title: PropTypes.string.isRequired,
 };
