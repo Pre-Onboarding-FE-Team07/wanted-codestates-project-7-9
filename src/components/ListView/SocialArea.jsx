@@ -18,11 +18,7 @@ function SocialArea({ likes }) {
   }, [likeArr, likes]);
 
   const heartClick = useCallback(() => {
-    if (heartArr[0]) {
-      setHeartArr([!heartArr[0], 'black']);
-    } else {
-      setHeartArr([!heartArr[0], undefined]);
-    }
+      setHeartArr([!heartArr[0], heartArr[0] ? 'black' : undefined]);
   }, [heartArr]);
 
   return (
