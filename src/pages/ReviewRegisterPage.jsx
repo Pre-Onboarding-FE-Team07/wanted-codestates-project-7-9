@@ -1,5 +1,7 @@
+import StarRating from '../components/StarRating';
+
 function ReviewRegisterPage() {
-  return <div>ReviewRegisterPage</div>;
+  return <StarRating />;
 }
 
 export default ReviewRegisterPage;

@@ -6,14 +6,10 @@ function Stars({ stars }) {
   return (
     <Rating>
       {[...Array(stars)].map(() => (
-        <div>
-          <Star black />
-        </div>
+        <Star black />
       ))}
       {[...Array(5 - stars)].map(() => (
-        <div>
-          <Star />
-        </div>
+        <Star />
       ))}
     </Rating>
   );
@@ -23,7 +19,6 @@ export default Stars;
 
 const Rating = styled.div`
   padding: 1rem 1.6rem;
-  display: flex;
 `;
 
 const Star = styled(FiStar)`
