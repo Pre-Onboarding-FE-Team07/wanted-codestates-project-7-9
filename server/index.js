@@ -18,12 +18,13 @@ exports.http = (req, res) => {
     const start = perPage * (pageNo - 1);
     const end = perPage + start;
 
+    let sortedData = data;
     if (sort === 'likes') {
-      data.sort((lhs, rhs) => rhs.likes - lhs.likes);
+      sortedData = data.sort((lhs, rhs) => rhs.likes - lhs.likes);
     } else if (sort === 'comments') {
-      data.sort((lhs, rhs) => rhs.comments.length - lhs.comments.length);
+      sortedData = data.sort((lhs, rhs) => rhs.comments.length - lhs.comments.length);
     } else if (sort === 'random') {
-      data
+      sortedData = data
         .map((val) => ({ val, rand: Math.random() }))
         .sort((lhs, rhs) => lhs.rand - rhs.rand)
         .map(({ val }) => val);
@@ -32,6 +33,6 @@ exports.http = (req, res) => {
     res
       .status(200)
       .type('json')
-      .send(JSON.stringify(data.slice(start, end)));
+      .send(JSON.stringify(sortedData.slice(start, end)));
   }
 };
