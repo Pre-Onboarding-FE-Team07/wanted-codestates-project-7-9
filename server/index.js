@@ -14,8 +14,21 @@ exports.http = (req, res) => {
   } else {
     const pageNo = Math.abs(req.query?.pageNo || 1);
     const perPage = Math.abs(req.query?.perPage || 10);
+    const sort = req.query?.sort || 'recent';
     const start = perPage * (pageNo - 1);
     const end = perPage + start;
+
+    if (sort === 'likes') {
+      data.sort((lhs, rhs) => rhs.likes - lhs.likes);
+    } else if (sort === 'comments') {
+      data.sort((lhs, rhs) => rhs.comments.length - lhs.comments.length);
+    } else if (sort === 'random') {
+      data
+        .map((val) => ({ val, rand: Math.random() }))
+        .sort((lhs, rhs) => lhs.rand - rhs.rand)
+        .map(({ val }) => val);
+    }
+
     res
       .status(200)
       .type('json')
