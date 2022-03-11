@@ -7,6 +7,7 @@ import Stars from '../components/ListView/Stars';
 import Desc from '../components/ListView/Desc';
 import Content from '../components/ListView/Content';
 import Data from '../data/data.json';
+import List from '../components/Comments/List';
 
 function ReviewDetailsPage() {
   return (
@@ -14,12 +15,17 @@ function ReviewDetailsPage() {
       <ModalHeader title="리뷰 상세보기" />
       {Data.map((item) => (
         <div key={item.id}>
-          <InfoTop username={item.username} createdAt={item.createdAt} />
-          <Image src={item.src} />
-          <SocialArea likes={item.likes} />
-          <Stars stars={item.stars} />
-          <Desc description={item.description} />
-          <Content review={item.review} />
+          <div>
+            <InfoTop username={item.username} createdAt={item.createdAt} />
+            <Image src={item.src} />
+            <SocialArea likes={item.likes} />
+            <Stars stars={item.stars} />
+            <Desc description={item.description} />
+            <Content review={item.review} />
+          </div>
+          <Comments>
+            <List comments={item.comments} />
+          </Comments>
         </div>
       ))}
     </Detail>
@@ -33,4 +39,9 @@ const Detail = styled.div`
   top: 0;
   z-index: 50;
   background-color: ${(props) => props.theme.color.white};
+`;
+
+const Comments = styled.div`
+  background-color: ${(props) => props.theme.color.unselected};
+  padding: 2rem 0;
 `;
