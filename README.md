@@ -97,8 +97,10 @@
 사용자가 보고 있었던 모든 데이터 중에서 사용자가 클릭한 상품의 정보만 찾기 위해서 productId를 통해 filter함수로 해당 정보를 찾았습니다.
 `const newChangeObj = detailList.filter((item) => item.id === productId);`
 * **2) 추가된 댓글 넣어주기**
-앞서 댓글 추가하려는 데이터를 가지고 와서 기존의 배열과 합쳐주었습니다.
-`newChangeObj[0].comments = [...newChangeObj[0].comments, newComment];`
+앞서 댓글 추가하려는 데이터를 가지고 와서 기존의 데이터와 합쳐서 교체하였습니다.
+아래의 방식처럼 추가해주는 방식도 시도해봤지만 키 값이 동일하게 들어가기에 수정하였습니다.
+`newChangeObj[0].comments = [...newChangeObj[0].comments, newComment];` ->
+`newChangeObj[0].comments = newCommentArr;`
 * **3) 변경된 댓글 상품 정보 기존에 상품 정보에 넣어주기**
 변경된 상품에 대한 정보를 제외하고 기존의 정보들은 변경되지 않았기에 slice 함수를 이용하여 전체 데이터를 나눈 후 변경된 정보만 넣어주었습니다.
 ```
@@ -118,7 +120,7 @@ export const detailAddComment = (
   index,
 ) => {
   const newChangeObj = detailList.filter((item) => item.id === productId);
-  newChangeObj[0].comments = [...newChangeObj[0].comments, newComment];
+  newChangeObj[0].comments = newCommentArr;
   const newDetail = [
     ...detailList.slice(0, index),
     ...newChangeObj,

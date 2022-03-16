@@ -72,16 +72,10 @@ export const detailAddComment = (
   const newDetail = [
     ...detailList.slice(0, index),
     ...newChangeObj,
-    ...detailList.slice(index, detailList.length),
+    ...detailList.slice(index + 1, detailList.length),
   ];
-  const dupDetail = newDetail.reduce((acc, current) => {
-    if (acc.findIndex(({ id }) => id === current.id) === -1) {
-      acc.push(current);
-    }
-    return acc;
-  }, []);
   return {
     type: DETAIL_ADD_COMMENT,
-    payload: dupDetail,
+    payload: newDetail,
   };
 };
