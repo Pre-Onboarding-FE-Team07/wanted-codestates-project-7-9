@@ -137,8 +137,90 @@ export const detailAddComment = (
 
 #### 구현한 방법
 
+[제출한 PR 목록](https://github.com/Pre-Onboarding-FE-Team07/wanted-codestates-project-7-9/pulls?q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed+author%3Ajinyongp)
+
+- 데이터를 제공하는 주어진 API가 따로 없어서 원본 사이트을 크롤링하여 데이터를 읽고 가져왔습니다. 이는 굉장히 오랜 시간을 필요하는 작업이고, 수집한 데이터를 가공한 후 클라이언트로 전달하므로 별도의 server를 구축할 필요가 있었습니다. 작은 단위의 서버만 필요했으므로 [Serverless Framework](https://www.serverless.com/)를 이용해 serverless를 구축했습니다.
+
+- Serverless Framework의 Provider로 [Google Cloud Functions](https://developers.google.com/learn/topics/functions)를 선택했고, [문서를 참고](https://www.serverless.com/framework/docs/providers/google)하여 설정을 완료했습니다.
+
+- 데이터를 가져올 사이트는 무한 스크롤로 구현되어 있었으므로 스크롤을 내려가며 데이터를 가져올 필요가 있었습니다. [Puppeteer](https://pptr.dev/) 라이브러리를 활용하여 Headless Browser를 이용해 스크롤을 내리며 데이터를 가져오도록 하였습니다. [`loadContents()`](./server/crawler.js#L80) 함수는 다음의 단계를 거쳐 데이터를 가져옵니다.
+
+  1. 브라우저를 엽니다.
+  2. 데이터를 긁어오려는 주소로 이동합니다.
+  3. 구현된 앱이 존재하는 iframe을 찾습니다.
+  4. 무한스크롤을 시작합니다.
+  5. 1000개 이상의 데이터를 로드하면 무한스크롤을 멈춥니다.
+  6. 가져온 데이터를 전달합니다.
+
+- `loadContents`에 전달하는 옵션 중 `silent`를 `false`로 할 경우, 로그를 확인할 수 있습니다. 최소 1000개 내외의 데이터를 가져오려고 할 때 로그는 다음과 같습니다.
+
+```sh
+$ node crawler 1000
+🔥 Scraping at least 1000 items...
+🚀 Initializing a Browser...
+🔗 Going to https://balaan.co.kr/m2/main/contents.php...
+🔦 Finding iframe and getting its #document...
+🌱 Starting infinite scrolling...
+  #1: 48 items
+  #2: 72 items
+  #3: 96 items
+  ...#4 ~ #38
+  #39: 960 items
+  #40: 984 items
+  #41: 1008 items
+🌳 Finished infinite scrolling!
+😁 Completely Contents Loaded!!
+✨  Done in 119.61s.
+```
+
+- `puppeteer.launch({ headless: false })`로 설정하게 되면 headless 브라우저가 아닌 실제 Chromium 브라우저가 실행되어 알아서 스크롤하는 모습을 확인할 수 있습니다.
+
+![chromium browser](assets/browser.gif)
+
+- 스크롤을 내릴 때 데이터의 수가 동일하다면 총 10번 재시도합니다. (예시: `#27: 648 items (Retry: 1/10)`) 10번 이상 데이터가 더 이상 불러와지지 않는다면 `🚨 Contents could not load anymore!` 경고를 띄우고 스크롤링을 중지합니다.
+
+- 읽어온 데이터는 html 형태로 되어있으므로 이를 읽고 가공하기 위해 [Cheerio](https://cheerio.js.org/) 라이브러리를 이용했습니다. jQuery 기반으로 되어 있어 [함수형으로 작성하기 매우 용이](./server/crawler.js#L15)했습니다. 가공한 데이터는 다음과 같습니다. 읽은 데이터 목록은 `data.json`에 저장합니다.
+
+```json
+[
+  {
+    "id": "170530",
+    "username": "goodi1004",
+    "review": "잘입을꺼 같아요\n잘산거 같아요~^•^~",
+    "images": [
+      {
+        "id": 1,
+        "type": "image/webp",
+        "srcset": "https://<path>.webp",
+        "src": "https://<path>.jpeg"
+      }
+    ],
+    "stars": 4,
+    "best": false,
+    "description": "구매 옵션명 : 4 / 몸무게 : 75 ~ 79kg / 키 : 180 ~ 184cm / 평소 상의 사이즈 : XL",
+    "deliveryDay": 2,
+    "shorts": [
+      { "question": "사이즈는 어떤가요?", "answer": "정사이즈에요" },
+      { "question": "색상은 어떤가요?", "answer": "화면과 같아요" },
+      { "question": "핏은 어떤가요?", "answer": "적당해요" }
+    ],
+    "likes": "4",
+    "comments": [],
+    "hashTags": [],
+    "createdAt": "2022-04-01"
+  },
+]
+```
+
+- [server/index.js](./server/index.js)에서 API를 구현했습니다. 생성된 `data.json`에서 일부 데이터를 전송합니다. 페이지네이션 기능을 위해 `pageNo`와 `perPage` query를 통해 페이지 별 데이터를 일부만 가져올 수 있도록 하였고, `sort` query를 통해 정렬된 데이터를 전달할 수 있도록 했습니다. 또한, 개발 환경에서도 CORS 정책에 제한받지 않도록 모두 개방해두었습니다. API 엔드포인트는 다음과 같습니다.
+
+>https://asia-northeast3-team-projects-343711.cloudfunctions.net/balaan-crawler-dev-contents
+
 #### 어려웠던 점 (에러 핸들링)
 
+- 모두 처음 사용해보는 스택이라 많은 문서를 참고하여 구현해야 했습니다. 문서를 통한 빠른 학습으로 작성한 코드의 유닛 테스트를 통해 결과를 검증하였고 이를 통합하여 원하는 서비스를 구현할 수 있었습니다.
+
+- 실제 구현된 앱의 document는 `iframe` 내부에 위치하였으므로 최외각 `html`에서는 `iframe` 내부에 위치한 스크롤을 담당하는 `html` 노드도, 데이터를 가진 `.contents-item` 노드도 가져올 수 없는 문제가 있었습니다. [`iframe`의 이름인 `ifr`을 통해 해당 `iframe`을 먼저 찾은 뒤](./server/crawler.js#L96)에 내부 html을 가져오는 방법으로 문제를 해결할 수 있었습니다.
 
 ## 문선경
 
